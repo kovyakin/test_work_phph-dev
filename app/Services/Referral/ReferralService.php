@@ -7,6 +7,12 @@ use App\Models\Referral;
 
 class ReferralService
 {
+    /**
+     *
+     * @param  \App\Models\Master  $referred
+     * @param  string  $code
+     * @return null|\App\Models\Referral
+     */
     public function registerReferral(Master $referred, string $code): ?Referral
     {
         $referrer = Master::where('referral_code', $code)->first();
@@ -27,6 +33,11 @@ class ReferralService
         );
     }
 
+    /**
+     *
+     * @param  int  $paymentAmount
+     * @return int
+     */
     public function rewardAmount(int $paymentAmount): int
     {
         $percent = (int) config('referral.percent');

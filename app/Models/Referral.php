@@ -17,22 +17,38 @@ class Referral extends Model
     public const STATUS_PENDING = 'pending';
     public const STATUS_REWARDED = 'rewarded';
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'referrer_master_id',
         'referred_master_id',
         'status',
     ];
 
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function referrerMaster(): BelongsTo
     {
         return $this->belongsTo(Master::class, 'referrer_master_id');
     }
 
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function referredMaster(): BelongsTo
     {
         return $this->belongsTo(Master::class, 'referred_master_id');
     }
 
+    /**
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', self::STATUS_REWARDED);
