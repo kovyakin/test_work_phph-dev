@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\Referrals\AttachController;
+use App\Http\Controllers\Api\Referrals\EarningsController;
+use App\Http\Controllers\Api\Referrals\MyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +19,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/ping', fn () => ['ok' => true]);
+Route::get('/ping', fn() => ['ok' => true]);
+
+Route::middleware(\App\Http\Middleware\ResolveCurrentMaster::class)->group(function () {
+    Route::post('/referrals/attach',AttachController::class)->name('referrals.attach');
+
+    Route::get('/referrals/my', MyController::class)->name('api.referrals.my');
+
+    Route::get('/referrals/earnings', EarningsController::class)->name('api.referrals.earnings');
+});
 
 // TODO: POST /api/referrals/attach
 // TODO: GET  /api/referrals/my

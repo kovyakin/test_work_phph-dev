@@ -11,9 +11,13 @@ class ReferralEarning extends Model
 {
     use HasFactory;
 
+    protected $table='referral_earnings';
     public const STATUS_PENDING = 'pending';
     public const STATUS_PAID = 'paid';
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'referrer_master_id',
         'referred_master_id',
@@ -25,26 +29,45 @@ class ReferralEarning extends Model
         'status',
     ];
 
+    /**
+     * @var string[]
+     */
     protected $casts = [
         'payment_amount' => 'integer',
         'amount' => 'integer',
     ];
 
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function referrerMaster(): BelongsTo
     {
         return $this->belongsTo(Master::class, 'referrer_master_id');
     }
 
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function referredMaster(): BelongsTo
     {
         return $this->belongsTo(Master::class, 'referred_master_id');
     }
 
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function referral(): BelongsTo
     {
         return $this->belongsTo(Referral::class);
     }
 
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function payment(): BelongsTo
     {
         return $this->belongsTo(Payment::class);
