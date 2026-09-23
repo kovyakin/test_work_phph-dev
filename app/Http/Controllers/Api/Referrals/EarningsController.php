@@ -24,7 +24,7 @@ class EarningsController extends Controller
             return response()->json($data);
         }catch (\Exception $exception){
             Log::error($exception->getMessage());
-            return response()->json(['success' => false, 'message' => $exception->getMessage()]);
+            return response()->json(['success' => false, 'message' => $exception->getMessage(),500]);
         }
 
 
